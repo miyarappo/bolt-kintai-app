@@ -35,7 +35,6 @@ async function homeTabHandler({ event, client, logger }) {
                   emoji: true,
                   text: "🏢 オフィス出勤",
                 },
-                value: "click_me_123",
                 action_id: "start_work_at_office_action",
               },
               {
@@ -45,7 +44,6 @@ async function homeTabHandler({ event, client, logger }) {
                   emoji: true,
                   text: "🏠 リモート出勤",
                 },
-                value: "click_me_123",
                 action_id: "start_work_at_home_action",
               },
             ],
@@ -67,7 +65,6 @@ async function homeTabHandler({ event, client, logger }) {
                   emoji: true,
                   text: "🔜 休憩入り",
                 },
-                value: "click_me_123",
                 action_id: "start_break_action",
               },
               {
@@ -77,7 +74,6 @@ async function homeTabHandler({ event, client, logger }) {
                   emoji: true,
                   text: "🔙 休憩戻り",
                 },
-                value: "click_me_123",
                 action_id: "end_break_action",
               },
             ],
@@ -99,7 +95,6 @@ async function homeTabHandler({ event, client, logger }) {
                   emoji: true,
                   text: "🍻 退勤",
                 },
-                value: "click_me_123",
                 action_id: "end_work_action",
               },
             ],
@@ -111,8 +106,31 @@ async function homeTabHandler({ event, client, logger }) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: "*本日の勤怠*\n\n出勤: 09:55\n休憩入り: 13:00\n休憩戻り: 13:55",
+              text: "*🚨 注意（未実装）*\n```いつもと比べて稼働時間が増加しています。\n体調には気をつけてください😌```",
             },
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: "これまでの一日あたりの平均実働: 08:23\n直近5日間の平均実働: 09:45",
+            },
+          },
+          {
+            type: "divider",
+          },
+          {
+            type: "section",
+            fields: [
+              {
+                type: "mrkdwn",
+                text: "*本日の勤怠*\n\n出勤: 09:55\n休憩入り: 13:00\n休憩戻り: 13:55",
+              },
+              {
+                type: "mrkdwn",
+                text: "*今月の勤怠（未実装）*\n\n実働: 80:05 / 基準: 160:00",
+              },
+            ],
           },
           {
             type: "divider",
@@ -121,25 +139,40 @@ async function homeTabHandler({ event, client, logger }) {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: "*今月の勤怠*\n\n実働: 80:05 / 基準: 160:00",
+              text: "*設定*",
             },
           },
           {
-            type: "divider",
-          },
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: "*あなたの傾向*\n\n一日あたりの平均実働: 08:23\n直近5日間の平均実働: 09:45",
-            },
-          },
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: "いつもと比べて稼働時間が増加しています。体調には気をつけてください😌",
-            },
+            type: "actions",
+            elements: [
+              {
+                type: "button",
+                text: {
+                  type: "plain_text",
+                  emoji: true,
+                  text: "📮 投稿先の登録",
+                },
+                action_id: "open_post_settings_modal",
+              },
+              {
+                type: "button",
+                text: {
+                  type: "plain_text",
+                  emoji: true,
+                  text: "🔄 勤怠@Webとの連携（未実装）",
+                },
+                action_id: "open_attendance_web_settings_modal",
+              },
+              {
+                type: "button",
+                text: {
+                  type: "plain_text",
+                  emoji: true,
+                  text: "⏱️ リマインダーの登録（未実装）",
+                },
+                action_id: "open_reminder_settings_modal",
+              },
+            ],
           },
         ],
       },
@@ -150,4 +183,4 @@ async function homeTabHandler({ event, client, logger }) {
   }
 }
 
-module.exports = { homeTabHandler };
+module.exports = homeTabHandler;
