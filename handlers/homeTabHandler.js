@@ -1,5 +1,28 @@
+const { getWorkRecord } = require("../utils/workRecordManager");
+
 async function homeTabHandler({ event, client, logger }) {
   try {
+    const userId = event.user;
+    const today = new Date().toISOString().split("T")[0];
+    const workRecord = await getWorkRecord(userId, today);
+
+    let attendanceText = "*本日の勤怠*\n\n";
+    if (workRecord && workRecord.actions.length > 0) {
+      const formatTime = (isoString) => {
+        const date = new Date(isoString);
+        return date.toLocaleTimeString("ja-JP", {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+      };
+
+      workRecord.actions.forEach((action) => {
+        attendanceText += `${action.label}: ${formatTime(action.timestamp)}\n`;
+      });
+    } else {
+      attendanceText += "記録なし";
+    }
+
     const result = await client.views.publish({
       user_id: event.user,
       view: {
@@ -124,7 +147,7 @@ async function homeTabHandler({ event, client, logger }) {
             fields: [
               {
                 type: "mrkdwn",
-                text: "*本日の勤怠*\n\n出勤: 09:55\n休憩入り: 13:00\n休憩戻り: 13:55",
+                text: attendanceText,
               },
               {
                 type: "mrkdwn",
